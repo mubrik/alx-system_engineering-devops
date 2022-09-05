@@ -1,2 +1,2 @@
 #!/bin/bash
-cat /etc/passwd | sort | grep -v 'syslog' | grep '/home'
+awk -F: '{print $1":"$6}' /etc/passwd | sort
