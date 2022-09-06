@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "current paath: $PATH"
+PATH="$PATH:/action"
+echo "fter path: $PATH"
