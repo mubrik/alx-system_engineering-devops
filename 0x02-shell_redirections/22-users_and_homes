@@ -1,2 +1,2 @@
 #!/bin/bash
-cat /etc/passwd | sort | grep '/home'
+awk -F: '$6 ~ /\/home/ {print}' /etc/passwd | sort
