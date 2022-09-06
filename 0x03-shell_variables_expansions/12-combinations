@@ -1,7 +1,2 @@
 #!/bin/bash
-for letter in {a..z}{a..z}; do
-    if [ "$letter" != "oo" ]
-    then
-	echo $letter
-    fi
-done
+echo {a..z}{z..a} | grep -o '[a-z][a-z]' | grep -v 'oo'
