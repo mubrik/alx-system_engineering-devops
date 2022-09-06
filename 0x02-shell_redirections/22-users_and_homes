@@ -1,2 +1,3 @@
 #!/bin/bash
-cat /etc/passwd | sort | grep '/home' | awk -F: '{print $1":"$6}'
+cat /etc/passwd | sort | cut -d ":" -f 1,6
+
