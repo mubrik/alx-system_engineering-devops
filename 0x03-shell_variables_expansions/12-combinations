@@ -1,0 +1,7 @@
+#!/bin/bash
+for letter in {a..z}{a..z}; do
+    if [ "$letter" != "oo" ]
+    then
+	echo $letter
+    fi
+done
