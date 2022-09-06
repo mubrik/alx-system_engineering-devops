@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# first define commit message
+COMMIT_MSG="This is commited from  script"
+
+# get position parameters, using 1 fr now
+POSPAR1="$1"
+POSPAR2="$2"
+
+if [[ $# -eq 0 ]]
+then
+    echo "No commit msg"
+else
+    COMMIT_MSG=$1
+    echo "Message present"
+fi
+
+echo "Commiting with messgage: $COMMIT_MSG"
+
+git add .
+git commit -m "$COMMIT_MSG"
+git push
+
+
+
