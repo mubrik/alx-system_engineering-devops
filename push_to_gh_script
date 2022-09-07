@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # first define commit message
-COMMIT_MSG="This is commited from  script"
+COMMIT_MSG="This is commited from script"
 
 # get position parameters, using 1 fr now
 POSPAR1="$1"
