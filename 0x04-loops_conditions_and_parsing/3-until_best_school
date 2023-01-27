@@ -4,5 +4,5 @@ x=0
 until [ $x -gt 9 ]
 do
   echo "Best School"
-  x=$(( $x + 1 ))
+  x=$((x + 1))
 done
