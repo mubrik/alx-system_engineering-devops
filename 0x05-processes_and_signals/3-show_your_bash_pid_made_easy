@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 # This script is displaying all bash id
 # shellcheck disable=SC2009
-find /proc -mindepth 2 -maxdepth 2 -name exe -lname '*/bash' -exec sh -c 'echo -n cmdline: ; cat "${0%exe}cmdline" | xargs -0 echo ; echo' {} \;
+while read line
+do
+  if [[ -f "/proc/$line/comm" && -r "/proc/$line/comm" ]]
+  then
+    cat "/proc/$line/comm" | xargs printf "$line %s\n"
+  fi
+done < <(pgrep bash)
