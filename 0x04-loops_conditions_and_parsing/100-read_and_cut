@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This script is displaying content of /etc/passwd
+file="/etc/passwd"
+# Each input line divided into seven fields separated by a colon (:) character
+# https://www.cyberciti.biz/faq/unix-howto-read-line-by-line-from-file/
+while IFS=: read -r f1 _ f3 _ _ f6 _
+do
+  # display fields using f1, f2,..,f7
+  printf '%s:%s:%s\n' "$f1" "$f3" "$f6"
+done <"$file"
