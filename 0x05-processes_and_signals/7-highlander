@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# This script is displaying bash id
+# shellcheck disable=SC2009
+function do_for_sigterm() {
+  echo "I am invincible!!!"
+}
+while true
+do
+  trap "do_for_sigterm" 15
+  echo "To infinity and beyond"
+  sleep 2
+done

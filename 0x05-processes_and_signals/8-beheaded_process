@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This script is displaying bash id
+# shellcheck disable=SC2009
+pkill --signal 9 -f 7-highlander
