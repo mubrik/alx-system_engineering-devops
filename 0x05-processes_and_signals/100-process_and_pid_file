@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# This script is displaying bash id
+
+echo $$ > /var/run/myscript.pid
+
+function do_for_sigterm() {
+  echo "I hate the kill command"
+  rm /var/run/myscript.pid
+  exit
+}
+
+function do_for_sigquit() {
+  rm /var/run/myscript.pid
+  exit
+}
+
+function do_for_sigint() {
+  echo "Y U no love me?!"
+  exit
+}
+
+while true
+do
+  trap "do_for_sigterm" 15
+  trap "do_for_sigint" 2
+  trap "do_for_sigquit" 3
+  echo "To infinity and beyond"
+done
+
