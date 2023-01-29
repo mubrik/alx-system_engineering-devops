@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script is displaying all bash id
+# shellcheck disable=SC2009
+while read line
+do
+  printf "%s bash\n" "$line"
+done < <(pidof bash | tr " " "\n")
