@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This script is awk
+# awk '/$1/{c++} END{ print $1 " " $9 c }' ./apache-access.log
+awk 'NR==1 {last=$1} $1 != last {print last, "count: " c[last]; last = $1} {c[$1]++} END{print last, "count: " c[last]}' ./apache-access.log | sort -h
