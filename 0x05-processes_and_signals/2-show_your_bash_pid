@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 # This script is displaying bash id
 # shellcheck disable=SC2009
-ps -C bash -o user,pid,pcpu,pmem,vsz,rss,tname,stat,start_time,time,comm
+while read line
+do
+  if [[ $line == *"bash"* ]]; then
+  echo "$line"
+  fi
+done < <(ps -afux)
