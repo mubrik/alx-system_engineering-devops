@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# listen to a port
+sudo ufw allow 98
+nc -l -p 98
