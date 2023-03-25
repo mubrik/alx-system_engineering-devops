@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
+# cretae rsa key
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/school -N betty
