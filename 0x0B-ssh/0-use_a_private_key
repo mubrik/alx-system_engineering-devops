@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh -i ~/.ssh/school -o 'StrictHostKeyChecking=no' ubuntu@54.90.41.154
