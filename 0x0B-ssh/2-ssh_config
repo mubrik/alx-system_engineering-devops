@@ -1,6 +1,6 @@
 Host my-alx-server
   HostName 54.90.41.154
   User ubuntu
-  IdentityFile ~/.ssh/school
+  IdentityFile ~/.ssh/alx
   PreferredAuthentications publickey
   PasswordAuthentication no
