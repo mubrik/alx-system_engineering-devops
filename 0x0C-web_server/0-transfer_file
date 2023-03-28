@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # check if all 4 parameters are passed
 if [ $# -lt 4 ]; then
@@ -13,4 +13,4 @@ username=$3
 ssh_key=$4
 
 # transfer the file using scp command
-scp -o "StrictHostKeyChecking=no" -i $ssh_key $file_path $username@$ip_address:~
+scp -o "StrictHostKeyChecking=no" -i "$ssh_key" "$file_path" "$username"@"$ip_address":~
