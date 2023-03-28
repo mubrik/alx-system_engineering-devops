@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# install and configure nginx
+
+# install
+apt-get update
+apt-get -y install nginx
+# create html with hello world
+echo "<html><body><h1>Hello World!</h1></body></html>" > /var/www/html/index.html
+# check yntax errors
+nginx -t
+# restart
+/etc/init.d/nginx restart
