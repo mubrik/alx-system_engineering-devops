@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#transfer files to my server
 
 # check if all 4 parameters are passed
 if [ $# -lt 4 ]; then
