@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# install and configure nginx
+
+# install
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# create 404
+echo "Ceci n'est pas une page." > /var/www/html/404.html
+# add 440 to server block
+sudo sed -i '/^\s*server {/a \
+    \terror_page 404 /404.html;\n\tlocation = /404.html {\n\t\tinternal;\n\t}' /etc/nginx/sites-enabled/default
+
+
+# Restart Nginx to apply changes
+sudo service nginx restart
