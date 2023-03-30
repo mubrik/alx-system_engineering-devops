@@ -7,7 +7,7 @@ sudo apt-get -y install nginx
 # make owner
 sudo chown -R $USER:$USER /var/www/html
 # create html with hello world
-echo "<html><body><h1>Hello World\!</h1></body></html>" > /var/www/html/index.html
+echo "Hello World!" > /var/www/html/index.html
 # check yntax errors
 sudo nginx -t
 # restart
