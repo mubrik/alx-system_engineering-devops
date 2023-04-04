@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# haproxy load balancr
+# install
+sudo apt-get update
+sudo apt-get install -y haproxy
+# verify install
+haproxy -v
+# toggle enabling
+sudo sed -i 's/#ENABLED=0/ENABLED=1/g' /etc/default/haproxy
+# add frontend and backend
+sudo sed -i 's/.*frontend http_front.*/&\n        bind *:80\n        default_backend http_back\n/g' /etc/haproxy/haproxy.cfg
+sudo sed -i 's/.*backend http_back.*/&\n        balance roundrobin\n        server web-01 138847-web-01:80 check\n        server web-02 138847-web-02:80 check/g' /etc/haproxy/haproxy.cfg
+sudo service haproxy start

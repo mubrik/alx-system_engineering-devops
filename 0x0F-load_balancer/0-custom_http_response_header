@@ -4,11 +4,11 @@
 sudo apt-get update
 sudo apt-get -y install nginx
 # make owner
-sudo chown -R $USER:$USER /var/www/html
+sudo chown -R "$USER":"$USER" /var/www/html
 # create html with hello world
 echo "Hello World!" > /var/www/html/index.html
 # get perm
-sudo chown -R $USER:$USER /etc/nginx
+sudo chown -R "$USER":"$USER" /etc/nginx
 # copy old file
 cp /etc/nginx/nginx.conf /etc/nginx/nginx_old.conf
 # sed edit current
