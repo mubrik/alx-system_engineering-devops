@@ -11,4 +11,4 @@ echo "Hello World!" > /var/www/html/index.html
 # check yntax errors
 sudo nginx -t
 # restart
-/etc/init.d/nginx restart
+sudo service nginx restart

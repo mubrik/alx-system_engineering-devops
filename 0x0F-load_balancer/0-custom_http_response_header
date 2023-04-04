@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# edit nginx server to add header
+# get perm
+sudo chown -R $USER:$USER /etc/nginx
+# copy old file
+cp /etc/nginx/nginx.conf /etc/nginx/nginx_old.conf
+# sed edit current
+sudo sed -i 's/# server_tokens off;/add_header X-Served-By $HOSTNAME;/g' /etc/nginx/nginx.conf
+# reload
+sudo service nginx reload
