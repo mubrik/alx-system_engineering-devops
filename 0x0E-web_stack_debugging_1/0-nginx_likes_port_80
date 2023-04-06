@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # fix debugging
 
 # Edit Nginx configuration file to listen on port 80 and all available IPv4 IPs
