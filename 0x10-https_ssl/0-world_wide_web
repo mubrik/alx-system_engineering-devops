@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# get domain info
+# Function to get the DNS record for a subdomain
+get_subdomain_info() {
+  local domain="$1"
+  local subdomain="$2"
+  record_type=$(dig +short "$subdomain.$domain" | awk '{print $2}')
+  destination=$(dig +short "$subdomain.$domain" | awk '{print $NF}')
+  echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Set default subdomains to check
+default_subdomains=(www lb-01 web-01 web-02)
+
+# Check if subdomain argument is provided
+if [ -n "$2" ]; then
+  # Only check specified subdomain
+  get_subdomain_info "$1" "$2"
+else
+  # Check default subdomains
+  for subdomain in "${default_subdomains[@]}"; do
+    get_subdomain_info "$1" "$subdomain"
+  done
+fi
