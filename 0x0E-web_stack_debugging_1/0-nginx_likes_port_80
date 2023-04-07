@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
 # fix debugging
-# Edit Nginx configuration file to listen on port 80 and all available IPv4 IPs
-sudo sed -i 's/8080/80/' /etc/nginx/sites-enabled/default
-# Check if configuration is valid and resatrt Nginx if no errors
-nginx -t && service nginx restart
+sudo sed -i 's/8080/80/' /etc/nginx/sites-enabled/default && nginx -t && service nginx restart
