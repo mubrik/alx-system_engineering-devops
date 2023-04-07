@@ -4,7 +4,12 @@
 get_subdomain_info() {
   local domain="$1"
   local subdomain="$2"
-  record_type=$(dig +short "$subdomain.$domain" | awk '{print $2}')
+  output=$(dig +short "$subdomain.$domain")
+  if [[ "$output" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    record_type="A"
+  else
+    record_type=$(echo "$output" | awk '{print $2}')
+  fi
   destination=$(dig +short "$subdomain.$domain" | awk '{print $NF}')
   echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
