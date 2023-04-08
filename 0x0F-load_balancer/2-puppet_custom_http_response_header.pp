@@ -1,42 +1,48 @@
-# stuff
-package { 'nginx':
-  ensure   => installed,
-  provider => 'apt'
+# does stuff
+exec { 'apt_update':
+  command => '/usr/bin/apt-get update',
+  refreshonly => true,
 }
 
-file { '/var/www/html/':
+package { 'nginx':
+  ensure => installed,
+  require => Exec['apt_update'],
+}
+
+file { '/var/www':
   ensure => 'directory',
-  before => Service['nginx']
+  owner  => $::id,
+  group  => $::id,
+  mode   => '0755',
+}
+
+file { '/var/www/html':
+  ensure => 'directory',
+  owner  => $::id,
+  group  => $::id,
+  mode   => '0755',
+  require => File['/var/www'],
+}
+
+exec { 'change_owner':
+  command => "/bin/chown -R ${::id} /etc/nginx /var/www/html",
+  require => Package['nginx'],
 }
 
 file { '/var/www/html/index.html':
-  ensure  => 'file',
-  content => 'Hello World!',
-  require => File['/var/www/html/']
+  ensure => present,
+  content => "Hello World!\n",
+  require => Exec['change_owner'],
 }
 
-file { '/etc/nginx/sites-enabled/default':
-  ensure  => 'file',
-  content => 'server {
-  listen 80 default_server;
-  listen [::]:80 default_server;
-  root /var/www/html;
-  index index.html index.htm index.nginx-debian.html;
-  server_name _;
-  add_header X-Served-By $hostname;
-  location /redirect_me {
-    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-  }
-  location / {
-    try_files $uri $uri/ =404;
-  }
-  }',
+exec { 'add_header':
+  command => "/bin/grep -q 'add_header X-Served-By' /etc/nginx/nginx.conf || sudo /bin/sed -i '/# server_tokens off;/ a        add_header X-Served-By $hostname;' /etc/nginx/nginx.conf",
   require => Package['nginx'],
-  before  => Service['nginx']
-
+  notify  => Service['nginx'],
 }
 
 service { 'nginx':
-  ensure  => 'running',
-  require => Package['nginx']
+  ensure => running,
+  enable => true,
+  require => Exec['add_header'],
 }
