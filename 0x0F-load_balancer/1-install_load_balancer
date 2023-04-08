@@ -5,10 +5,10 @@ if ! command -v haproxy &> /dev/null; then
   sudo apt-get update &> /dev/null
   sudo apt-get install haproxy -y &> /dev/null
 fi
-# verify install
-haproxy -v
 # toggle enabling
 sudo sed -i 's/#ENABLED=0/ENABLED=1/g' /etc/default/haproxy
 # add frontend and backend
-sudo sed -i '$a\nfrontend http_front\n\tbind *:80\n\tdefault_backend www-backend\n\nbackend www-backend\n\tbalance roundrobin\n\tserver web-01 138847-web-01:80 check\n\tserver web-02 138847-web-02:80 check' /etc/haproxy/haproxy.cfg
-sudo service haproxy restart
+sudo sed -i '$afrontend http_front\n\tbind *:80\n\tdefault_backend www-backend\n\nbackend www-backend\n\tbalance roundrobin\n\tserver web-01 54.90.41.154:80 check\n\tserver web-02 52.91.160.206:80 check' /etc/haproxy/haproxy.cfg
+sudo service haproxy restart &> /dev/null
+# test
+# cat /etc/haproxy/haproxy.cfg
