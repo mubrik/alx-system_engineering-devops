@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# apache
+/etc/init.d/apache2 restart
