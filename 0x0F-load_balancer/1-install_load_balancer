@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # haproxy load balancr
 # install
-sudo apt-get update
-sudo apt-get install -y haproxy
+if ! command -v haproxy &> /dev/null; then
+  sudo apt-get update &> /dev/null
+  sudo apt-get install haproxy -y &> /dev/null
+fi
 # verify install
 haproxy -v
 # toggle enabling
