@@ -1,25 +1,37 @@
 # does stuff
-package { 'nginx':
-  ensure => installed,
+exec { 'apt_update':
+  command => '/usr/bin/apt-get update',
+  refreshonly => true,
 }
 
-file { '/var/www/html/':
-  ensure => 'directory',
-  before => Service['nginx']
+package { 'nginx':
+  ensure => installed,
+  require => Exec['apt_update'],
+}
+
+file { '/var/www/html':
+  ensure => directory,
+}
+
+exec { 'change_owner':
+  command => "chown -R ${::id} /etc/nginx /var/www/html",
+  require => Package['nginx'],
 }
 
 file { '/var/www/html/index.html':
-  ensure  => 'file',
-  content => 'Hello World!',
-  require => File['/var/www/html/']
+  ensure => present,
+  content => "Hello World!\n",
+  require => Exec['change_owner'],
 }
 
-file { '/etc/nginx/conf.d/custom_headers.conf':
-  content => "add_header X-Served-By $hostname;\n",
+exec { 'add_header':
+  command => "sed -i 's/# server_tokens off;/&\n\tadd_header X-Served-By $hostname;/' /etc/nginx/nginx.conf",
+  unless => "grep -q 'add_header X-Served-By' /etc/nginx/nginx.conf",
+  require => Package['nginx'],
 }
 
 service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Package['nginx'],
+  ensure => running,
+  enable => true,
+  require => Exec['add_header'],
 }
