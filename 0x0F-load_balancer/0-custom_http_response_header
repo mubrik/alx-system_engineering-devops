@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 # edit nginx server to add header
 # install
-sudo apt-get update
-sudo apt-get -y install nginx
+if ! command -v nginx &> /dev/null; then
+  sudo apt-get update &> /dev/null
+  sudo apt-get install nginx -y &> /dev/null
+fi
 # make owner
-# get perm
-sudo chown -R "$USER":"$USER" /etc/nginx
-sudo chown -R "$USER":"$USER" /var/www/html
+sudo chown -R "$USER":"$USER" /etc/nginx /var/www/html
 # create html with hello world
 echo "Hello World!" > /var/www/html/index.html
-# copy old file
-cp /etc/nginx/nginx.conf /nginx_old.conf
 # sed edit current
-sudo sed -i 's/# server_tokens off;/&\n\tadd_header X-Served-By $hostname;/' /etc/nginx/nginx.conf
+if grep -q "add_header X-Served-By" /etc/nginx/nginx.conf; then
+  :
+else
+  sudo sed -i 's/# server_tokens off;/&\n\tadd_header X-Served-By $hostname;/' /etc/nginx/nginx.conf
+fi
 # reload
-sudo service nginx reload
+sudo service nginx restart &> /dev/null
+# test
+# curl -sI localhost | grep X-Served-By
