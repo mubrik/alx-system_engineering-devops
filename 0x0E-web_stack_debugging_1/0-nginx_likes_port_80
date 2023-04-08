@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 # fix debugging
-sudo sed -i '/listen .* ipv6only=on;/d' /etc/nginx/sites-enabled/default
-sudo sed -i 's/listen 8080 default_server;/listen 80 default_server;/' /etc/nginx/sites-enabled/default
-sudo nginx -s reload
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
