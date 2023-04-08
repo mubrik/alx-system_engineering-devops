@@ -9,12 +9,23 @@ package { 'nginx':
   require => Exec['apt_update'],
 }
 
+file { '/var/www':
+  ensure => 'directory',
+  owner  => $::id,
+  group  => $::id,
+  mode   => '0755',
+}
+
 file { '/var/www/html':
-  ensure => directory,
+  ensure => 'directory',
+  owner  => $::id,
+  group  => $::id,
+  mode   => '0755',
+  require => File['/var/www'],
 }
 
 exec { 'change_owner':
-  command => "chown -R ${::id} /etc/nginx /var/www/html",
+  command => "/bin/chown -R ${::id} /etc/nginx /var/www/html",
   require => Package['nginx'],
 }
 
@@ -25,9 +36,9 @@ file { '/var/www/html/index.html':
 }
 
 exec { 'add_header':
-  command => "sed -i 's/# server_tokens off;/&\n\tadd_header X-Served-By $hostname;/' /etc/nginx/nginx.conf",
-  unless => "grep -q 'add_header X-Served-By' /etc/nginx/nginx.conf",
+  command => "/bin/grep -q 'add_header X-Served-By' /etc/nginx/nginx.conf || sudo /bin/sed -i '/# server_tokens off;/ a        add_header X-Served-By $hostname;' /etc/nginx/nginx.conf",
   require => Package['nginx'],
+  notify  => Service['nginx'],
 }
 
 service { 'nginx':
