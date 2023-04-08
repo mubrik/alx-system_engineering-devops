@@ -2,3 +2,4 @@
 # fix debugging
 sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
+echo 88888 > /run/nginx.pid
