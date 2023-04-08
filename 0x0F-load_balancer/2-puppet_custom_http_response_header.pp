@@ -25,7 +25,7 @@ file { '/var/www/html':
 }
 
 exec { 'change_owner':
-  command => "/bin/chown -R ${::id} /etc/nginx /var/www/html",
+  command => "/bin/chown -R '$USER':'$USER' /etc/nginx /var/www/html",
   require => Package['nginx'],
 }
 
@@ -44,5 +44,5 @@ exec { 'add_header':
 service { 'nginx':
   ensure => running,
   enable => true,
-  require => Exec['add_header'],
+  require => Exec['add_header']
 }
