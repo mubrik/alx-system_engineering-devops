@@ -1,3 +1,4 @@
+# stuff
 package { 'nginx':
   ensure   => installed,
   provider => 'apt'
