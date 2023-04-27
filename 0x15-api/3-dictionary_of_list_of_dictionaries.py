@@ -24,21 +24,23 @@ def main():
 
     # Create dictionary with users data
     users_dict = {}
+    final_dict = {}
     for user in users_data:
         user_id = user.get('id', '')
         user_name = user.get('username', '')
-        users_dict[user_id] = {"name": user_name, "tasks": []}
+        users_dict[user_id] = {"name": user_name}
+        final_dict[user_id] = []
 
     # Add tasks to users dictionary
     for task in todos_data:
         task_dict = {"username": users_dict[task["userId"]]["name"],
                      "task": task["title"],
                      "completed": task["completed"]}
-        users_dict[task["userId"]]["tasks"].append(task_dict)
+        final_dict[task["userId"]].append(task_dict)
 
     # Write JSON file
     with open("todo_all_employees.json", "w") as json_file:
-        json.dump(users_dict, json_file)
+        json.dump(final_dict, json_file)
 
 
 if __name__ == '__main__':
